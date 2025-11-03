@@ -1,20 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-
-
-
+const palito = document.createElement('div') //creo el div del palito
 const grid = document.getElementById("grid") //agarro el grid del html
 const width = 5; //cantidad de bloques
 const tam_cuadro = 50; //tamanio pixeles
-//floor f
-// const mapa = [
-//     ['fffff'] //piso (f)
-// ]
-
 let posicionJugador = 5 //div index 5 (pos6)
 let elementoJugador; //jugador global
 let direccionplayer = 'right'
 let juegorunning = 'true'
+let cont = 1;
+const pos = {
+    x:50,
+    y:100,
+}
+
+
+const posarbol = {
+    x:1,
+    y:1
+}
+const pospalito = {
+    y:0
+}
+function finjuego(){
+
+    location.reload()
+}
+
+function moverpalito(){
+    palito.style.top = `${pospalito.y + 50}px`
+    pospalito.y +=50;
+    if(pospalito.y==150){
+        pospalito.y = 0
+        crearpalito()
+    }
+}
+function crearpalito(){
+    let numeroAleatorio = Math.floor(Math.random() * 2);
+console.log(numeroAleatorio);
+if(numeroAleatorio == 0)
+        palito.setAttribute('class', 'palito_izq')    
+if(numeroAleatorio == 1)
+        palito.setAttribute('class', 'palito_der')  
+    
+    palito.style.top = `${pospalito.y}px`
+    document.getElementById('idarbol').appendChild(palito);
+
+}
+
+function colision(){
+    if(pospalito.y == pos.y)
+    return true
+else
+    return false
+}
+function perder(){
+    // const mensaje = document.createElement('p')
+    document.body.append('PERDISTE')
+}
 
 function crearJugador(){
  elementoJugador = document.createElement('div') //creo div del jugador a la derecha
@@ -30,16 +72,7 @@ function crearJugador(){
     grid.appendChild(elementoJugador);
 }
 //console.log(2)
-const pos = {
-    x:50,
-    y:100,
-}
-let cont = 1;
 
-const posarbol = {
-    x:1,
-    y:1
-}
 function creararbol(){
             const elementoArbol = document.createElement('div')
             elementoArbol.setAttribute('id', 1)
@@ -87,7 +120,9 @@ if(i==0){
 }
 
 crear();
-creararbol()
+creararbol();
+crearpalito();
+
 function dibujar(){
     elementoJugador.style.left = `${pos.x}px` //posicion que cambia es la x por ahora
     elementoJugador.style.top = `${pos.y}px` //queda siempre en el cuadro de abajo de 50px
@@ -115,9 +150,13 @@ dibujar()
 //new KeyboardEvent(type)
 //A string with the name of the event.
 // It is case-sensitive and browsers set it to keydown, keyup, or keypress.
-document.addEventListener('keydown', (e) =>{
+document.addEventListener('keypress', (e) =>{
 const tecla = e.key
 mover(tecla)
+moverpalito()
+if(colision){
+    perder()
+}
 // console.log(tecla)})
 })
 
