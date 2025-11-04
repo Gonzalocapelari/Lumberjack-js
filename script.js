@@ -189,7 +189,7 @@ function mover(tecla){ //muevo la pos en variable no se pinta todavia
 
 document.addEventListener('keypress', (e) => {
     const tecla = e.key;
-
+if(e.key == 'a' || e.key == 'd'){
     mover(tecla);
     dibujar(e.key)
     // 2. VERIFICAMOS LA COLISIÓN ANTES DE MOVER EL ÁRBOL
@@ -228,6 +228,7 @@ if (pospalito.y == pos.y || pospalito.y == (pos.y + 50) ) {
     
     puntaje++;
     puntos.textContent = puntaje;
+    }
 });
 })
 
