@@ -14,7 +14,7 @@ let cont = 1;
 const puntos = document.getElementById('contador') //div del contador
 let puntaje = 0;
 puntos.textContent =0
-const papu = document.createElement('p') //creo paragraph papu para las quotes
+const papu = document.getElementById('papu') //creo paragraph papu para las quotes
 const pos = {
     x:50,
     y:100,
@@ -65,12 +65,6 @@ if(numeroAleatorio == 1)
 
 }
 
-function colision(){
-    if(pospalito.y == pos.y)
-    return true
-else
-    return false
-}
 function quote_random(){
   
     fetch('https://api.quotable.io/random').then( (respuesta) =>{
@@ -87,7 +81,7 @@ document.body.append(papu) // aver si funciona
 
 function crearJugador(){
  elementoJugador = document.createElement('div') //creo div del jugador a la derecha
-    elementoJugador.className = 'jugador-derecha'
+    elementoJugador.className = 'jugador-izquierda'
    // elementoJugador.setAttribute('class', 'jugador-derecha')
     elementoJugador.id = 'jugador'
     // elementoJugador.style.right = ('738px')
@@ -150,12 +144,17 @@ crear();
 creararbol();
 crearpalito();
 
-function dibujar(){
+function dibujar(tecla){
+if(tecla=='a')
+    elementoJugador.className = 'jugador-izquierda'
+else
+    elementoJugador.className= 'jugador-derecha'
+
     elementoJugador.style.left = `${pos.x}px` //posicion que cambia es la x por ahora
     elementoJugador.style.top = `${pos.y}px` //queda siempre en el cuadro de abajo de 50px
 }
 
-function mover(tecla){ 
+function mover(tecla){ //muevo la pos en variable no se pinta todavia
     if(tecla == 'a'){
         pos.x =50
     console.log(pos.x)}
@@ -171,43 +170,67 @@ function mover(tecla){
    //         pos.x=200//lo deja capado en 200 ya que 250 se sale.
 
 
-dibujar()
+
 }
-function verificarcolision(){
-if(pos.x = 50){//izquierda
-    if(pospalito.y == 100 && palito.getAttribute('class')=='palito_izq'){ //palito y:100 y es izquierdo
-        return true
-    }
-}else if(pos.x = 150){//derecha
-    if(pospalito.y == 100 && palito.getAttribute('class')=='palito_der'){ //palito y:100 y es izquierdo
-        return true
-    }}
+// function verificarcolision(){
+// if(pos.x == 50 && pospalito.y == 100 && palito.getAttribute('class')=='palito_izq'){//izquierda
+//         return true
+//     }
+// if(pos.x == 150 && pospalito.y == 100 && palito.getAttribute('class')=='palito_der'){//derecha
+//         return true
+//     }
     
-    return false
-}
+//     return false
+// }
+
 //new KeyboardEvent(type)
 //A string with the name of the event.
 // It is case-sensitive and browsers set it to keydown, keyup, or keypress.
-document.addEventListener('keypress', (e) =>{
-// console.log(tecla)})
-const tecla = e.key
-mover(tecla)
-moverpalito()
 
-    if((puntaje%2)==0){
-        quote_random()}
+document.addEventListener('keypress', (e) => {
+    const tecla = e.key;
 
-
-if(verificarcolision())
-    location.reload()
-
-puntaje++
-puntos.textContent =puntaje
+    mover(tecla);
+    dibujar(e.key)
+    // 2. VERIFICAMOS LA COLISIÓN ANTES DE MOVER EL ÁRBOL
+    // Esta es la lógica clave:
+    // ¿Hay un palito AHORA MISMO a la altura del jugador (y=100)?
+    // Y si lo hay, ¿coincide su lado con el nuevo lado del jugador (pos.x)?
     
+    let colision = false;
 
+if (pospalito.y == pos.y || pospalito.y == (pos.y + 50) ) { 
+        // (pos.y - 50) es la altura de la "cabeza" del jugador si el palito tiene 50px de alto
+        console.log('if1')
+        if (pos.x == 50 && palito.getAttribute('class') == 'palito_izq') {
+        console.log('if2')
+            colision = true; 
+        }
+        
+        if (pos.x == 150 && palito.getAttribute('class') == 'palito_der') {
+        console.log('if3')
+            colision = true;
+        }
+    }
+
+    if (colision) { //bool colision
+      location.reload();
+     console.log('perdio')
+        return; // Detenemos la ejecución para no sumar puntos
+    }
+
+    moverpalito();
+
+    
+    if ((puntaje % 2) == 0) {
+        quote_random();
+    }
+    
+    puntaje++;
+    puntos.textContent = puntaje;
+});
 })
 
-})
 // If the pressed key has a printed representation, 
 // the returned value is a non-empty Unicode character 
 // string containing the printable representation of the key.

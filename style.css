@@ -1,13 +1,41 @@
 body {
-    background-color: rgb(163, 153, 168);
-    color: #fff;
+    background-color: rgb(80, 65, 59); 
+    background-image: url('img/Firewood.png');
     display: flex;
     flex-direction: column;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /*viewhope?*/
+    min-height: 100vh; /*viewPORT?*/
     /*  high of the browser */
+ 
+  background-repeat: repeat; /* Evita que la imagen se repita */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  height: 300px; /* Define una altura fija o usa una altura basada en viewport (e.g., 50vh) */
+
+
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Asegúrate de que ocupen el 100% del viewport */
+    width: 100%;  /* Asegúrate de que ocupen el 100% del viewport */
+    overflow: hidden; /* Evita cualquier scroll */
+}
+
+img {
+   /* Asegura que la imagen no exceda el ancho de su contenedor */
+  height: auto;    /* Mantiene la proporción de la imagen automáticamente */
+}
+.body2{
+     background-color: rgb(163, 153, 168); 
+     width: 70%; 
+  height: 350px;
+  align-self: center;
+  position: absolute;
+  /* align-items: center;
+  justify-content: center;
+   display: flex;
+    flex-direction: column; */
+  opacity: 80%;
 }
 
 .grid {
@@ -45,10 +73,10 @@ body {
 }
 
 .jugador-derecha{
-
+   
     height: 100px;
     width: 50px;
-    background-color: rgb(255, 255, 255);
+   background-image: url(img/chainsaw2.png);
     /* border: 1px solid #ccc; */
     box-sizing: border-box; /* Importante para que el borde no sume al tamaño */
         background-size: cover;
@@ -62,19 +90,27 @@ body {
     /* border: 2px solid #fff; */
 }
 
-/* .jugador-derecha, .jugador-izquierda{
-    position: absolute;
-    width: 50;
-    height: 50;
-    z-index: 10;
-            background-size: cover;
+.jugador-izquierda{
+    height: 100px;
+    width: 50px;
+   background-image: url(img/chainsaw.png);
+    /* border: 1px solid #ccc; */
+    box-sizing: border-box; /* Importante para que el borde no sume al tamaño */
+        background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-} */
+    position: absolute;
+    z-index: 10;
+    border-radius: 0%;
+    /* border-color: #000000;
+    border-width: 0.5 ; */
+    /* border: 2px solid #fff; */
+} 
 
 .paragraph{
     bottom: 0px;
-    
+    opacity: 100%;
+    z-index: 10;
 }
 .arbol{
   height: 200px;
@@ -107,7 +143,7 @@ bottom: -50apx;
     align-self: center;
     height: 20px;
     width: 20px;
-    
+z-index: 10;
 }
 .palito_izq{
     position: absolute;
@@ -125,4 +161,7 @@ bottom: -50apx;
     z-index: 10;
     height: 10px;
     width: 50px;
+}
+.papu{
+    z-index: 10;
 }
