@@ -32,7 +32,7 @@ const pospalito = {
 function moverpalito(){
     palito.style.top = `${pospalito.y + 50}px`
     pospalito.y +=50;
-    if(pospalito.y==150){
+    if(pospalito.y==200){
         pospalito.y = 0
         crearpalito()
     }
