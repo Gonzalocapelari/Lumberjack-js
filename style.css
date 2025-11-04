@@ -103,6 +103,12 @@ bottom: -50apx;
     padding: 0;
 }
 
+.contador{
+    align-self: center;
+    height: 20px;
+    width: 20px;
+    
+}
 .palito_izq{
     position: absolute;
     background-color: #8b5336;

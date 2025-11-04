@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-const palito = document.createElement('div') //creo el div del palito
+const palitoizq = document.createElement('div') //creo el div del palito izq
+const palitoder = document.createElement('div') //creo el div del palito der
+const palito= document.createElement('div') //creo el div del palito
+
 const grid = document.getElementById("grid") //agarro el grid del html
 const width = 5; //cantidad de bloques
 const tam_cuadro = 50; //tamanio pixeles
@@ -8,6 +11,10 @@ let elementoJugador; //jugador global
 let direccionplayer = 'right'
 let juegorunning = 'true'
 let cont = 1;
+const puntos = document.getElementById('contador') //div del contador
+let puntaje = 0;
+puntos.textContent =0
+const papu = document.createElement('p') //creo paragraph papu para las quotes
 const pos = {
     x:50,
     y:100,
@@ -21,10 +28,6 @@ const posarbol = {
 const pospalito = {
     y:0
 }
-function finjuego(){
-
-    location.reload()
-}
 
 function moverpalito(){
     palito.style.top = `${pospalito.y + 50}px`
@@ -34,6 +37,21 @@ function moverpalito(){
         crearpalito()
     }
 }
+
+
+
+// function crearpalito(){
+// let numeroAleatorio = Math.floor(Math.random() * 2);
+// console.log(numeroAleatorio);
+// if(numeroAleatorio == 0)
+//         palitoizq.setAttribute('class', 'palito_izq')    
+// if(numeroAleatorio == 1)
+//         palitoder.setAttribute('class', 'palito_der')  
+    
+//     palito.style.top = `${pospalito.y}px`
+//     document.getElementById('idarbol').appendChild(palito);
+
+// }
 function crearpalito(){
     let numeroAleatorio = Math.floor(Math.random() * 2);
 console.log(numeroAleatorio);
@@ -53,9 +71,18 @@ function colision(){
 else
     return false
 }
-function perder(){
-    // const mensaje = document.createElement('p')
-    document.body.append('PERDISTE')
+function quote_random(){
+  
+    fetch('https://api.quotable.io/random').then( (respuesta) =>{
+        return respuesta.json()
+    }).then((data) => {
+papu.innerHTML = data.content+'<br>'+data.author  //le hago un textcontent si fuera solo tecto pero
+//el problema es que quiero meter  un <br> en medio y necesito hacerlo con innerHTML
+papu.style.fontSize = '5%';
+papu.style.textAlign = "center" //soy un genio jajaj
+document.body.append(papu) // aver si funciona
+    }) 
+
 }
 
 function crearJugador(){
@@ -146,18 +173,38 @@ function mover(tecla){
 
 dibujar()
 }
-
+function verificarcolision(){
+if(pos.x = 50){//izquierda
+    if(pospalito.y == 100 && palito.getAttribute('class')=='palito_izq'){ //palito y:100 y es izquierdo
+        return true
+    }
+}else if(pos.x = 150){//derecha
+    if(pospalito.y == 100 && palito.getAttribute('class')=='palito_der'){ //palito y:100 y es izquierdo
+        return true
+    }}
+    
+    return false
+}
 //new KeyboardEvent(type)
 //A string with the name of the event.
 // It is case-sensitive and browsers set it to keydown, keyup, or keypress.
 document.addEventListener('keypress', (e) =>{
+// console.log(tecla)})
 const tecla = e.key
 mover(tecla)
 moverpalito()
-if(colision){
-    perder()
-}
-// console.log(tecla)})
+
+    if((puntaje%2)==0){
+        quote_random()}
+
+
+if(verificarcolision())
+    location.reload()
+
+puntaje++
+puntos.textContent =puntaje
+    
+
 })
 
 })
